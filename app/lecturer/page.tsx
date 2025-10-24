@@ -1,4 +1,5 @@
 import { getAllLecturers } from '../prisma';
+import Link from 'next/link';
 
 type Lecturer = {
   id: string;
@@ -13,7 +14,12 @@ export default async function LecturerPage() {
   const lecturers: Lecturer[] = await getAllLecturers();
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Lecturers&apos; Data</h1>
+      <div className="flex justify-between items-center mb-3">
+        <h1 className="text-2xl font-bold mb-4">Lecturers&apos; Data</h1>
+        <Link href="/lecturer/add_lecturer" className="p-2 bg-blue-900">
+          Add Lecturer
+        </Link>
+      </div>
 
       <table className="border border-white w-full text-left border-collapse">
         <thead>
