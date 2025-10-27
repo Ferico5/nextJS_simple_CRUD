@@ -1,6 +1,7 @@
 'use server';
 
-import { addLecturer, updateLecturer } from '@/app/prisma';
+import { addLecturer, updateLecturer, deleteLecturer } from '@/app/prisma';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export type Errors = {
@@ -98,4 +99,9 @@ export default async function editLecturer(id: string, prevState: FormState, for
   }
 
   redirect('/lecturer');
+}
+
+export async function removeLecturer(id: string) {
+  await deleteLecturer(id);
+  revalidatePath('/lecturer');
 }

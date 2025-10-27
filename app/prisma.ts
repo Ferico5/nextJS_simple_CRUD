@@ -56,3 +56,9 @@ export async function updateLecturer(id: string, NID: string, name: string, age:
     data: { NID, name, age, address, phone },
   });
 }
+
+export async function deleteLecturer(id: string) {
+  return prisma.lecturer.delete({
+    where: { id },
+  });
+}

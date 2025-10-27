@@ -1,4 +1,5 @@
 import { getAllLecturers } from '../prisma';
+import { removeLecturer } from '@/actions/lecturer';
 import Link from 'next/link';
 
 export type Lecturer = {
@@ -40,9 +41,15 @@ export default async function LecturerPage() {
               <td className="border border-white p-2 text-center">{lecturer.age}</td>
               <td className="border border-white p-2">{lecturer.address}</td>
               <td className="border border-white p-2">{lecturer.phone}</td>
-              <td className='border border-white p-2 flex justify-around'>
-                <Link href={`/lecturer/${lecturer.id}`} className='px-2 bg-blue-500 hover:cursor-pointer'>Edit</Link>
-                <button className='px-2 bg-red-500 hover:cursor-pointer'>Delete</button>
+              <td className="border border-white p-2 flex justify-around">
+                <Link href={`/lecturer/${lecturer.id}`} className="px-2 bg-blue-500 hover:cursor-pointer">
+                  Edit
+                </Link>
+                <form action={removeLecturer.bind(null, lecturer.id)}>
+                  <button type="submit" className="px-2 bg-red-500 hover:cursor-pointer">
+                    Delete
+                  </button>
+                </form>
               </td>
             </tr>
           ))}
