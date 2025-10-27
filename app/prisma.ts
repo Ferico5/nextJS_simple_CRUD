@@ -49,3 +49,10 @@ export async function addLecturer(NID: string, name: string, age: number, addres
     data: { NID, name, age, address, phone },
   });
 }
+
+export async function updateLecturer(id: string, NID: string, name: string, age: number, address: string, phone: string) {
+  return prisma.lecturer.update({
+    where: { id },
+    data: { NID, name, age, address, phone },
+  });
+}

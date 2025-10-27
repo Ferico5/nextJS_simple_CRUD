@@ -1,6 +1,6 @@
 'use server';
 
-import { addLecturer } from '@/app/prisma';
+import { addLecturer, updateLecturer } from '@/app/prisma';
 import { redirect } from 'next/navigation';
 
 export type Errors = {
@@ -13,6 +13,7 @@ export type Errors = {
 
 export type FormState = {
   errors: Errors;
+  message?: string; // for other error like db error or internet error
 };
 
 export async function createLecturer(prevState: FormState, formData: FormData) {
@@ -51,6 +52,50 @@ export async function createLecturer(prevState: FormState, formData: FormData) {
   }
 
   await addLecturer(NID, name, age, address, phone);
+
+  redirect('/lecturer');
+}
+
+export default async function editLecturer(id: string, prevState: FormState, formData: FormData) {
+  'use server';
+
+  const NID = formData.get('NID') as string;
+  const name = formData.get('name') as string;
+  const age = Number(formData.get('age'));
+  const address = formData.get('address') as string;
+  const phone = formData.get('phone') as string;
+
+  const errors: Errors = {};
+
+  if (!NID) {
+    errors.NID = 'NID wajib diisi!';
+  }
+
+  if (!name) {
+    errors.name = 'Nama wajib diisi!';
+  }
+
+  if (!age) {
+    errors.age = 'Umur wajib diisi!';
+  }
+
+  if (!address) {
+    errors.address = 'Alamat wajib diisi!';
+  }
+
+  if (!phone) {
+    errors.phone = 'Nomor Telepon wajib diisi!';
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors };
+  }
+
+  try {
+    await updateLecturer(id, NID, name, age, address, phone);
+  } catch {
+    return { errors: {}, message: 'Server error, please try again later.' };
+  }
 
   redirect('/lecturer');
 }

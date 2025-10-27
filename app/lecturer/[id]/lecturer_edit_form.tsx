@@ -1,18 +1,26 @@
 'use client';
 
-import { useActionState } from 'react';
-import { FormState, createLecturer } from '@/actions/lecturer';
+import { useState } from 'react';
+import editLecturer, { FormState } from '@/actions/lecturer';
 import { Lecturer } from '../page';
 
 export default function EditLecturerForm({ lecturer }: { lecturer: Lecturer }) {
-  const initialState: FormState = {
-    errors: {},
+  const [state, setState] = useState<FormState>({ errors: {} });
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsPending(true);
+
+    const formData = new FormData(e.currentTarget);
+    const result = await editLecturer(lecturer.id, state, formData);
+
+    setState(result);
+    setIsPending(false);
   };
 
-  const [state, formAction, isPending] = useActionState(createLecturer, initialState);
-
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="NID">
           NID
