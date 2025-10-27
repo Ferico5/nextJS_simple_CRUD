@@ -29,6 +29,7 @@ export default async function LecturerPage() {
             <th className="border border-white p-2">Age</th>
             <th className="border border-white p-2">Address</th>
             <th className="border border-white p-2">Phone Number</th>
+            <th className="border border-white p-2">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,10 @@ export default async function LecturerPage() {
               <td className="border border-white p-2 text-center">{lecturer.age}</td>
               <td className="border border-white p-2">{lecturer.address}</td>
               <td className="border border-white p-2">{lecturer.phone}</td>
+              <td className='border border-white p-2 flex justify-around'>
+                <button className='px-2 bg-blue-500 hover:cursor-pointer'>Edit</button>
+                <button className='px-2 bg-red-500 hover:cursor-pointer'>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

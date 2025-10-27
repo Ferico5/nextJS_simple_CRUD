@@ -37,3 +37,9 @@ seedLecturer();
 export async function getAllLecturers() {
   return prisma.lecturer.findMany();
 }
+
+export async function addLecturer(NID: string, name: string, age: number, address: string, phone: string) {
+  return prisma.lecturer.create({
+    data: {NID, name, age, address, phone}
+  })
+}
