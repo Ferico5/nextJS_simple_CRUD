@@ -1,4 +1,4 @@
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from './generated/prisma';
 const prisma = new PrismaClient();
 
 const seedLecturer = async () => {
@@ -38,8 +38,14 @@ export async function getAllLecturers() {
   return prisma.lecturer.findMany();
 }
 
+export async function getSingleLecturer(id: string) {
+  return prisma.lecturer.findUnique({
+    where: { id },
+  });
+}
+
 export async function addLecturer(NID: string, name: string, age: number, address: string, phone: string) {
   return prisma.lecturer.create({
-    data: {NID, name, age, address, phone}
-  })
+    data: { NID, name, age, address, phone },
+  });
 }

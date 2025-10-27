@@ -1,7 +1,7 @@
 import { getAllLecturers } from '../prisma';
 import Link from 'next/link';
 
-type Lecturer = {
+export type Lecturer = {
   id: string;
   NID: string;
   name: string;
@@ -41,7 +41,7 @@ export default async function LecturerPage() {
               <td className="border border-white p-2">{lecturer.address}</td>
               <td className="border border-white p-2">{lecturer.phone}</td>
               <td className='border border-white p-2 flex justify-around'>
-                <button className='px-2 bg-blue-500 hover:cursor-pointer'>Edit</button>
+                <Link href={`/lecturer/${lecturer.id}`} className='px-2 bg-blue-500 hover:cursor-pointer'>Edit</Link>
                 <button className='px-2 bg-red-500 hover:cursor-pointer'>Delete</button>
               </td>
             </tr>
